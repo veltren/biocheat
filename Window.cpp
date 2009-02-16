@@ -1,13 +1,14 @@
 #include "Window.h"
 #include "ui_Window.h"
 
-Widget::Widget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::WidgetClass)
+Window::Window( QWidget *parent )
+    : QWidget( parent )
+    , ui( new Ui::WindowForm )
 {
-    ui->setupUi(this);
+    ui->setupUi( this );
 }
 
-Widget::~Widget()
+Window::~Window()
 {
     delete ui;
 }

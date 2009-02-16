@@ -1,10 +1,8 @@
-<ui version="4.0" stdsetdef="1" >
- <class>WidgetClass</class>
- <widget class="QWidget" name="WidgetClass" >
-  <property name="objectName" >
-   <cstring>WidgetClass</cstring>
-  </property>
-  <property name="geometry" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WindowForm</class>
+ <widget class="QWidget" name="WindowForm">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -12,12 +10,11 @@
     <height>400</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Widget</string>
   </property>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>

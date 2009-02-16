@@ -5,19 +5,19 @@
 
 namespace Ui
 {
-    class WidgetClass;
+    class WindowForm;
 }
 
-class Widget : public QWidget
+class Window : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = 0);
-    ~Widget();
+    Window(QWidget *parent = 0);
+    ~Window();
 
 private:
-    Ui::WidgetClass *ui;
+    Ui::WindowForm *ui;
 };
 
 #endif // WINDOW_H
