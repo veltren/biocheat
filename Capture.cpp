@@ -3,28 +3,61 @@
 #include <QDirIterator>
 #include <QImage>
 #include <QTimerEvent>
+#include <QX11Info>
+#include <QApplication>
+#include <QDesktopWidget>
 
 Capture::Capture( QObject * parent )
     : QObject( parent )
+    , m_fps( 0 )
     , m_currentIndex( 0 )
 {
-    // load PNGs
+    // TEMP load PNGs
     QString testDir = QCoreApplication::applicationDirPath() + QDir::separator() + "tests";
     QDirIterator it( testDir, QStringList() << "*.png", QDir::Files | QDir::NoDotAndDotDot );
     while ( it.hasNext() )
         m_images.append( QImage( it.next(), "PNG" ) );
     Q_ASSERT( m_images.size() );
+}
 
-    // start timer TEMP
-    m_timer.start( 2000, this );
+void Capture::setGeometry( const QRect & geometry )
+{
+    m_geometry = geometry;
+}
+
+QRect Capture::geometry() const
+{
+    return m_geometry;
+}
+
+void Capture::setFrequency( int fps )
+{
+    m_fps = fps;
+    m_timer.start( 1000 / m_fps, this );
+}
+
+int Capture::frequency() const
+{
+    return m_fps;
 }
 
 void Capture::timerEvent( QTimerEvent * event )
 {
-    if ( event->timerId() != m_timer.timerId() )
+    if ( event->timerId() != m_timer.timerId() || m_geometry.isNull() )
         return QObject::timerEvent( event );
 
-    emit gotImage( m_images[ m_currentIndex ] );
+    QPixmap grabbedPixmap = QPixmap::grabWindow(
+#ifdef Q_WS_X11
+            QX11Info::appRootWindow(),
+#else
+            QApplication::desktop()->winId(),
+#endif
+            m_geometry.left(), m_geometry.top(), m_geometry.width(), m_geometry.height() );
+
+    emit gotPixmap( grabbedPixmap );
+
+#if 0
+    emit gotImage( m_images[ 4-m_currentIndex ] );
 
     // TEMP
     m_timer.stop();
@@ -32,5 +65,6 @@ void Capture::timerEvent( QTimerEvent * event )
     // rotate index
     if ( ++m_currentIndex >= m_images.size() )
         m_currentIndex = 0;
+#endif
 }
 

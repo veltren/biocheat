@@ -2,7 +2,7 @@
 #define WINDOW_H
 
 #include <QWidget>
-#include <QImage>
+#include <QPixmap>
 class Capture;
 class Classifier;
 
@@ -24,7 +24,8 @@ class Window : public QWidget
         Classifier * m_classifier;
 
     private Q_SLOTS:
-        void slotProcessImage( const QImage & image );
+        void slotCapParamsChanged();
+        void slotProcessPixmap( const QPixmap & pixmap );
 };
 
 #endif
