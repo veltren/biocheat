@@ -2,7 +2,9 @@
 #define WINDOW_H
 
 #include <QWidget>
-#include "Capture.h"
+#include <QImage>
+class Capture;
+class Classifier;
 
 namespace Ui { class WindowForm; }
 
@@ -19,6 +21,7 @@ class Window : public QWidget
     private:
         Ui::WindowForm * ui;
         Capture * m_capture;
+        Classifier * m_classifier;
 
     private Q_SLOTS:
         void slotProcessImage( const QImage & image );

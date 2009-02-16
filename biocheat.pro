@@ -10,11 +10,13 @@ SOURCES += main.cpp \
     Capture.cpp \
     Recognizer.cpp \
     SimpleHinter.cpp \
-    Visualizer.cpp
+    Visualizer.cpp \
+    Classifier.cpp
 HEADERS += Window.h \
     Capture.h \
     Recognizer.h \
     SimpleHinter.h \
-    Visualizer.h
+    Visualizer.h \
+    Classifier.h
 FORMS += Window.ui
 RESOURCES += data/data.qrc
