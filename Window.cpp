@@ -5,6 +5,7 @@
 #include "SimpleHinter.h"
 #include "ui_Window.h"
 
+#include <QFile>
 #include <QImage>
 #include <QDesktopWidget>
 
@@ -36,8 +37,11 @@ Window::Window( QWidget *parent )
 
     // create and train the classifier
     m_classifier = new Classifier( QSize( 30, 30 ), this );
-    for ( int i = 0; i < 7; i++ )
+    for ( int i = 0; i < 7; i++ ) {
         m_classifier->addClass( i, QImage( QString( ":/data/class%1.png" ).arg( i ), "PNG" ) );
+        if ( QFile::exists( QString( ":/data/bomb%1.png" ).arg( i ) ) )
+            m_classifier->addClass( i, QImage( QString( ":/data/bomb%1.png" ).arg( i ), "PNG" ) );
+    }
 
     // create the recognizer
     m_recognizer = new Recognizer( m_classifier, this );
@@ -86,13 +90,15 @@ void Window::slotProcessPixmap( const QPixmap & pixmap, const QPoint & cursor )
 
     // process image
     bool displayRec = ui->display2->isChecked();
-    RecoResult rr = m_recognizer->recognize( pixmap, displayRec );
+    float sensitivity = (float)ui->sensitivity->value() / 100.0;
+    RecoResult rr = m_recognizer->recognize( pixmap, sensitivity, displayRec );
     if ( displayRec )
         ui->visualizer->setOriginalPixmap( m_recognizer->output() );
 
     // show results
     if ( ui->display3->isChecked() ) {
-        m_hinter->process( rr, pixmap );
+        bool highlight = ui->highlight->isChecked();
+        m_hinter->process( rr, pixmap, highlight );
         ui->visualizer->setOriginalPixmap( m_hinter->output() );
     }
 }

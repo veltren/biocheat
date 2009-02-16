@@ -7,5 +7,9 @@
         <file>class4.png</file>
         <file>class5.png</file>
         <file>class6.png</file>
+        <file>bomb0.png</file>
+        <file>bomb1.png</file>
+        <file>bomb2.png</file>
+        <file>bomb6.png</file>
     </qresource>
 </RCC>

@@ -19,7 +19,7 @@ class SimpleHinter : public QObject
     public:
         SimpleHinter( QObject * parent = 0 );
 
-        HintResults process( const RecoResult & recoResult, const QPixmap & origPixmap );
+        HintResults process( const RecoResult & recoResult, const QPixmap & origPixmap, bool highlight );
         QPixmap output() const;
 
     private:

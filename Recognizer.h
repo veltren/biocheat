@@ -25,7 +25,7 @@ class Recognizer : public QObject
         void setup( int hBlocks, int vBlocks );
 
         // do the job
-        RecoResult recognize( const QPixmap & pixmap, bool verbose = false );
+        RecoResult recognize( const QPixmap & pixmap, float sensitivity, bool verbose );
         QPixmap output() const;
 
     private:

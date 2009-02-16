@@ -17,7 +17,7 @@ void Recognizer::setup( int hBlocks, int vBlocks )
     m_vBlocks = vBlocks;
 }
 
-RecoResult Recognizer::recognize( const QPixmap & pixmap, bool verbose )
+RecoResult Recognizer::recognize( const QPixmap & pixmap, float sensitivity, bool verbose )
 {
     RecoResult rr;
     rr.rows = m_vBlocks;
@@ -55,10 +55,10 @@ RecoResult Recognizer::recognize( const QPixmap & pixmap, bool verbose )
             float xc = ((float)x + 0.5) * (float)pw / (float)m_hBlocks;
             QRect rect( (int)xc - cbw/2, (int)yc - cbh/2, cbw, cbh );
             ClassifyResult cr = m_classifier->classify( image.copy( rect ) );
-            if ( cr.confidence < 0.9 )
+            if ( cr.confidence < sensitivity )
                 cr.index = -1;
             rr.values[ rridx++ ] = cr.index;
-            if ( cr.confidence < 0.9 )
+            if ( cr.confidence < sensitivity )
                 continue;
 
             rr.valid++;

@@ -34,7 +34,7 @@ bool lowerHint( const HintResult & h1, const HintResult & h2 )
     return h1.count > h2.count;
 }
 
-HintResults SimpleHinter::process( const RecoResult & recoResult, const QPixmap & origPixmap )
+HintResults SimpleHinter::process( const RecoResult & recoResult, const QPixmap & origPixmap, bool highlight )
 {
     // geometry consts
     RecoResult R = recoResult;
@@ -77,7 +77,7 @@ HintResults SimpleHinter::process( const RecoResult & recoResult, const QPixmap 
     bool gotMore = false;
     foreach ( const HintResult & hint, results ) {
         // display only 4s or 5s if above 3
-        if ( hint.count > 3 )
+        if ( hint.count > 3 && highlight )
             gotMore = true;
         else if ( gotMore )
             break;
