@@ -2,10 +2,10 @@
 #include "Capture.h"
 #include "Classifier.h"
 #include "Recognizer.h"
+#include "SimpleHinter.h"
 #include "ui_Window.h"
 
 #include <QImage>
-#include <QMouseEvent>
 #include <QDesktopWidget>
 
 #define DEFAULT_WIDTH 252
@@ -17,7 +17,6 @@ Window::Window( QWidget *parent )
 {
     // create ui
     ui->setupUi( this );
-    ui->visualizer->installEventFilter( this );
     QDesktopWidget dw;
     ui->xOffset->setMaximum( dw.width() );
     ui->yOffset->setMaximum( dw.height() );
@@ -44,6 +43,9 @@ Window::Window( QWidget *parent )
     m_recognizer = new Recognizer( m_classifier, this );
     slotRecParamsChanged();
 
+    // create the hinter
+    m_hinter = new SimpleHinter( this );
+
     // create the capture
     m_capture = new Capture( this );
     connect( m_capture, SIGNAL(gotPixmap(const QPixmap &)),
@@ -53,25 +55,11 @@ Window::Window( QWidget *parent )
 
 Window::~Window()
 {
+    delete m_hinter;
     delete m_recognizer;
     delete m_capture;
     delete m_classifier;
     delete ui;
-}
-
-bool Window::eventFilter( QObject * object, QEvent * event )
-{
-    // intercept clicks on the Original image label
-    if ( object == ui->visualizer && event->type() == QEvent::MouseButtonPress ) {
-        QMouseEvent * me = static_cast<QMouseEvent *>( event );
-
-        QPixmap p = ui->visualizer->originalPixmap().copy( me->pos().x() - 15, me->pos().y() - 15, 30, 30 );
-        m_classifier->classify( p.toImage() );
-
-    }
-
-
-    return false;
 }
 
 void Window::slotCapParamsChanged()
@@ -97,12 +85,13 @@ void Window::slotProcessPixmap( const QPixmap & pixmap )
 
     // process image
     bool displayRec = ui->display2->isChecked();
-    m_recognizer->recognize( pixmap, displayRec );
-    if ( displayrec )
+    RecoResult rr = m_recognizer->recognize( pixmap, displayRec );
+    if ( displayRec )
         ui->visualizer->setOriginalPixmap( m_recognizer->output() );
 
     // show results
     if ( ui->display3->isChecked() ) {
-
+        m_hinter->process( rr, pixmap );
+        ui->visualizer->setOriginalPixmap( m_hinter->output() );
     }
 }

@@ -22,10 +22,10 @@ RecoResult Recognizer::recognize( const QPixmap & pixmap, bool verbose )
     RecoResult rr;
     rr.rows = m_vBlocks;
     rr.columns = m_hBlocks;
-    rr.total = r.rows * r.columns;
+    rr.total = rr.rows * rr.columns;
     rr.valid = 0;
-    rr.invalid = r.total;
-    rr.values.resize( r.total );
+    rr.invalid = rr.total;
+    rr.values.resize( rr.total );
 
     // geometry consts
     const int pw = pixmap.width();
@@ -42,9 +42,9 @@ RecoResult Recognizer::recognize( const QPixmap & pixmap, bool verbose )
     // paint results on a new image
     if ( m_outPix.size() != pixmap.size() )
         m_outPix = QPixmap( pixmap.size() );
-    QPainter pp( &m_outPix );
     if ( verbose )
         m_outPix.fill( Qt::transparent );
+    QPainter pp( &m_outPix );
 
     // recognize loop
     QImage image = pixmap.toImage();

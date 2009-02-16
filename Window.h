@@ -6,6 +6,7 @@
 class Capture;
 class Classifier;
 class Recognizer;
+class SimpleHinter;
 
 namespace Ui { class WindowForm; }
 
@@ -16,14 +17,12 @@ class Window : public QWidget
         Window( QWidget * parent = 0 );
         ~Window();
 
-    protected:
-        bool eventFilter( QObject * object, QEvent * event );
-
     private:
         Ui::WindowForm * ui;
         Capture * m_capture;
         Classifier * m_classifier;
         Recognizer * m_recognizer;
+        SimpleHinter * m_hinter;
 
     private Q_SLOTS:
         void slotCapParamsChanged();
