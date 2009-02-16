@@ -18,7 +18,7 @@ class Capture : public QObject
         int frequency() const;
 
     Q_SIGNALS:
-        void gotPixmap( const QPixmap & pixmap );
+        void gotPixmap( const QPixmap & pixmap, const QPoint & cursorPos );
 
     protected:
         void timerEvent( QTimerEvent * event );

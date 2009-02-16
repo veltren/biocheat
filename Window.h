@@ -27,7 +27,7 @@ class Window : public QWidget
     private Q_SLOTS:
         void slotCapParamsChanged();
         void slotRecParamsChanged();
-        void slotProcessPixmap( const QPixmap & pixmap );
+        void slotProcessPixmap( const QPixmap & pixmap, const QPoint & cursor );
 };
 
 #endif

@@ -48,8 +48,8 @@ Window::Window( QWidget *parent )
 
     // create the capture
     m_capture = new Capture( this );
-    connect( m_capture, SIGNAL(gotPixmap(const QPixmap &)),
-             this, SLOT(slotProcessPixmap(const QPixmap &)) );
+    connect( m_capture, SIGNAL(gotPixmap(const QPixmap &, const QPoint &)),
+             this, SLOT(slotProcessPixmap(const QPixmap &, const QPoint &)) );
     slotCapParamsChanged();
 }
 
@@ -76,10 +76,11 @@ void Window::slotRecParamsChanged()
     m_recognizer->setup( ui->hBlocks->value(), ui->vBlocks->value() );
 }
 
-void Window::slotProcessPixmap( const QPixmap & pixmap )
+void Window::slotProcessPixmap( const QPixmap & pixmap, const QPoint & cursor )
 {
     // show original image
     ui->visualizer->setMinimumSize( pixmap.size() );
+    ui->visualizer->setPixmapCursorPos( cursor );
     if ( ui->display1->isChecked() )
         ui->visualizer->setOriginalPixmap( pixmap );
 

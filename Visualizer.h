@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QPixmap>
 #include <QPaintEvent>
+#include <QPoint>
 
 class Visualizer : public QFrame
 {
@@ -14,11 +15,15 @@ class Visualizer : public QFrame
         void setOriginalPixmap( const QPixmap & pixmap );
         QPixmap originalPixmap() const;
 
+        void setPixmapCursorPos( const QPoint & pos );
+        QPoint pixmapCursorPos() const;
+
     protected:
         void paintEvent( QPaintEvent * event );
 
     private:
         QPixmap m_origPixmap;
+        QPoint m_pixCursorPos;
 };
 
 #endif

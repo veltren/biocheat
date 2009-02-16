@@ -3,9 +3,13 @@
 #include <QDirIterator>
 #include <QImage>
 #include <QTimerEvent>
+#ifdef Q_WS_X11
 #include <QX11Info>
+#else
 #include <QApplication>
+#endif
 #include <QDesktopWidget>
+#include <QPixmap>
 
 Capture::Capture( QObject * parent )
     : QObject( parent )
@@ -54,7 +58,8 @@ void Capture::timerEvent( QTimerEvent * event )
 #endif
             m_geometry.left(), m_geometry.top(), m_geometry.width(), m_geometry.height() );
 
-    emit gotPixmap( grabbedPixmap );
+
+    emit gotPixmap( grabbedPixmap, QCursor::pos() - QPoint( m_geometry.topLeft() ) );
 
 #if 0
     emit gotImage( m_images[ 4-m_currentIndex ] );
