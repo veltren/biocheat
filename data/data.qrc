@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/data" >
+        <file>class0.png</file>
+        <file>class1.png</file>
+        <file>class2.png</file>
+        <file>class3.png</file>
+        <file>class4.png</file>
+        <file>class5.png</file>
+        <file>class6.png</file>
+    </qresource>
+</RCC>

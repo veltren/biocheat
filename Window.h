@@ -1,23 +1,27 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
+#include "Capture.h"
 
-namespace Ui
-{
-    class WindowForm;
-}
+namespace Ui { class WindowForm; }
 
 class Window : public QWidget
 {
     Q_OBJECT
+    public:
+        Window( QWidget * parent = 0 );
+        ~Window();
 
-public:
-    Window(QWidget *parent = 0);
-    ~Window();
+    protected:
+        bool eventFilter( QObject * object, QEvent * event );
 
-private:
-    Ui::WindowForm *ui;
+    private:
+        Ui::WindowForm * ui;
+        Capture * m_capture;
+
+    private Q_SLOTS:
+        void slotProcessImage( const QImage & image );
 };
 
-#endif // WINDOW_H
+#endif

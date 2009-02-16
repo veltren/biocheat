@@ -1,12 +1,14 @@
-#ifndef VISUALIZER_H
-#define VISUALIZER_H
+#ifndef __Visualizer_h__
+#define __Visualizer_h__
 
-#include <QObject>
+#include <QFrame>
 
-class Visualizer : public QObject
+class Visualizer : public QFrame
 {
-public:
-    Visualizer();
+    Q_OBJECT
+    public:
+        Visualizer( QWidget * parent = 0 );
+
 };
 
-#endif // VISUALIZER_H
+#endif

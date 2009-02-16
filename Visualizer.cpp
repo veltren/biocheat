@@ -1,6 +1,7 @@
 #include "Visualizer.h"
 
-Visualizer::Visualizer()
+Visualizer::Visualizer( QWidget * parent )
+    : QFrame( parent )
 {
 }
 

@@ -9,11 +9,10 @@ Capture::Capture( QObject * parent )
     , m_currentIndex( 0 )
 {
     // load PNGs
-    QString testTir = QCoreApplication::applicationDirPath() + QDir::separator() + "test";
-    QDirIterator it( testTir, QStringList() << "*.png", QDir::Files | QDir::NoDotAndDotDot );
+    QString testDir = QCoreApplication::applicationDirPath() + QDir::separator() + "tests";
+    QDirIterator it( testDir, QStringList() << "*.png", QDir::Files | QDir::NoDotAndDotDot );
     while ( it.hasNext() )
-        m_images[ m_currentIndex++ ].load( it.next(), "PNG" );
-    m_currentIndex = 0;
+        m_images.append( QImage( it.next(), "PNG" ) );
     Q_ASSERT( m_images.size() );
 
     // start timer TEMP
@@ -26,6 +25,9 @@ void Capture::timerEvent( QTimerEvent * event )
         return QObject::timerEvent( event );
 
     emit gotImage( m_images[ m_currentIndex ] );
+
+    // TEMP
+    m_timer.stop();
 
     // rotate index
     if ( ++m_currentIndex >= m_images.size() )

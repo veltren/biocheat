@@ -17,3 +17,4 @@ HEADERS += Window.h \
     SimpleHinter.h \
     Visualizer.h
 FORMS += Window.ui
+RESOURCES += data/data.qrc
