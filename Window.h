@@ -5,6 +5,7 @@
 #include <QPixmap>
 class Capture;
 class Classifier;
+class Recognizer;
 
 namespace Ui { class WindowForm; }
 
@@ -22,9 +23,11 @@ class Window : public QWidget
         Ui::WindowForm * ui;
         Capture * m_capture;
         Classifier * m_classifier;
+        Recognizer * m_recognizer;
 
     private Q_SLOTS:
         void slotCapParamsChanged();
+        void slotRecParamsChanged();
         void slotProcessPixmap( const QPixmap & pixmap );
 };
 

@@ -82,7 +82,7 @@ ClassifyResult Classifier::classify( const QImage & image ) const
         }
     }
 
-    qWarning( "i: %d, conf %f", cr.index, cr.confidence );
+    //qWarning( "i: %d, conf %f", cr.index, cr.confidence );
 
     return cr;
 }
