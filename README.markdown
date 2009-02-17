@@ -7,7 +7,7 @@ This project is a mix of different small things:
  - screen grabbing (ok, that's a oneliner :-))
  - visualizing the 'moves'
 
-<div><img src="http://github.com/Eros/biocheat/blob?path[]=README.png&raw=true"></div>
+<div><img src="http://github.com/Eros/biocheat/blob?path[]=screenshot.png&raw=true"></div>
 
 Usage
 =====
