@@ -64,7 +64,7 @@ HintResults SimpleHinter::process( const RecoResult & recoResult, const QPixmap 
     font.setBold( true );
     font.setPixelSize( 18 );
     QPainter pp( &m_outPix );
-    pp.setOpacity( 0.2 );
+    pp.setOpacity( 0.8 );
     pp.drawPixmap( 0, 0, origPixmap );
     pp.setOpacity( 1.0 );
     pp.setFont( font );
@@ -75,6 +75,10 @@ HintResults SimpleHinter::process( const RecoResult & recoResult, const QPixmap 
     const int icoW = 32;
     const int icoH = 32;
     bool gotMore = false;
+    static int frameCnt = 0;
+    bool redLine = frameCnt > 5;
+    if ( ++frameCnt > 10 )
+        frameCnt = 0;
     foreach ( const HintResult & hint, results ) {
         // display only 4s or 5s if above 3
         if ( hint.count > 3 && highlight )
@@ -89,14 +93,18 @@ HintResults SimpleHinter::process( const RecoResult & recoResult, const QPixmap 
         QRect rect( (int)x1 - icoW / 2, (int)y1 - icoH / 2, icoW, icoH );
 
         // draw hilight and line
-        pp.setPen( Qt::red );
-        pp.drawRect( rect );
-        pp.setPen( Qt::green );
+        if ( redLine ) {
+            pp.setPen( QPen( Qt::red, 2 ) );
+            pp.drawRect( rect );
+        }
+        pp.setPen( QPen( Qt::white, 2 ) );
         pp.drawLine( x1, y1, x2, y2 );
 
         // draw number
-        pp.setPen( Qt::white );
-        pp.drawText( rect, Qt::AlignCenter, QString::number( hint.count ) );
+        if ( hint.count > 3 ) {
+           pp.setPen( Qt::white );
+           pp.drawText( rect, Qt::AlignCenter, QString::number( hint.count ) );
+        }
     }
 
     return results;
