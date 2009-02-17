@@ -1,3 +1,21 @@
+/***************************************************************************
+ * Copyright (c) 2009 Enrico Ros                                           *
+ *         2009 Enrico Ros <enrico.ros@gmail.com>                          *
+ *                                                                         *
+ * Permission is hereby granted, free of charge, to any person             *
+ * obtaining a copy of this software and associated documentation          *
+ * files (the "Software"), to deal in the Software without                 *
+ * restriction, including without limitation the rights to use,            *
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell       *
+ * copies of the Software, and to permit persons to whom the               *
+ * Software is furnished to do so, subject to the following                *
+ * conditions:                                                             *
+ *                                                                         *
+ * The above copyright notice and this permission notice shall be          *
+ * included in all copies or substantial portions of the Software.         *
+ *                                                                         *
+ ***************************************************************************/
+
 #include "Capture.h"
 #include <QCoreApplication>
 #include <QDirIterator>
@@ -14,14 +32,18 @@
 Capture::Capture( QObject * parent )
     : QObject( parent )
     , m_fps( 0 )
+#if 0
     , m_currentIndex( 0 )
+#endif
 {
+#if 0
     // TEMP load PNGs
     QString testDir = QCoreApplication::applicationDirPath() + QDir::separator() + "tests";
     QDirIterator it( testDir, QStringList() << "*.png", QDir::Files | QDir::NoDotAndDotDot );
     while ( it.hasNext() )
         m_images.append( QImage( it.next(), "PNG" ) );
     Q_ASSERT( m_images.size() );
+#endif
 }
 
 void Capture::setGeometry( const QRect & geometry )
@@ -72,4 +94,3 @@ void Capture::timerEvent( QTimerEvent * event )
         m_currentIndex = 0;
 #endif
 }
-
